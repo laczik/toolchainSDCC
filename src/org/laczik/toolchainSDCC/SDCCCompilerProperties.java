@@ -1,6 +1,6 @@
 /*
     SDCC Toolchain allows MPLABX to compile with SDCC+GPUtils for pic 16/18
-    Copyright (C) 2011 RMA de Almeida and 2015 ZJ Laczik
+    Copyright (C) 2011 RMA de Almeida, 2015 ZJ Laczik and 2016 P Hayes.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,19 +16,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package org.laczik.toolchainSDCC;
-import com.microchip.crownking.opt.Version;
-/**
- *
- * @author rmaalmeida and zjlaczik
- */
-public class SDCCVersionFactory implements Version.Factory  {
-    /**
-     * <p>This factory interface enables a client to instantiate extensions to
-     * the <code>Version</code> class without having to know the name of the
-     * particular extending class.
-     */
-    @Override
-    public SDCCVersion create(String s) {
-        return new SDCCVersion(s);
+
+import com.microchip.mplab.nbide.embedded.makeproject.api.configurations.MakeConfiguration;
+import com.microchip.mplab.nbide.embedded.makeproject.api.configurations.MakeConfigurationBook;
+import java.util.Properties;
+
+public class SDCCCompilerProperties {
+    public SDCCCompilerProperties(MakeConfigurationBook projectDescriptor, MakeConfiguration conf, Properties commandLineProperties) {
+        commandLineProperties.put("PROCESSOR_NAME", SDCCChipDependentProperties.getProcessorShortNameForCompiler(conf));
+        commandLineProperties.put("PROCESSOR_FAMILY", SDCCChipDependentProperties.getProcessorFamilyForCompiler(conf));
     }
 }

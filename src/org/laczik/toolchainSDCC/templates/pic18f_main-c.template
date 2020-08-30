@@ -5,6 +5,8 @@
    Created on %<%DATE%>%, %<%TIME%>%
  */
 
+#include <pic18fregs.h>
+
 void main(void)
 {
     //Infinite loop
@@ -14,12 +16,12 @@ void main(void)
     }
 }
 
-void highInterrupt(void) interrupt 1
+void highInterrupt(void) __interrupt(1)
 {
 
 }
 
-void lowInterrupt(void) interrupt 2
+void lowInterrupt(void) __interrupt(2)
 {
 
 }

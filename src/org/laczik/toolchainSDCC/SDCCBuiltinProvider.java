@@ -17,34 +17,23 @@
 */
 package org.laczik.toolchainSDCC;
 
-import com.microchip.mplab.nbide.embedded.api.LanguageToolSupport;
-import com.microchip.mplab.nbide.embedded.spi.VersionProvider;
-import java.io.File;
-import java.io.IOException;
-import java.util.regex.Matcher;
+import com.microchip.mplab.nbide.embedded.spi.BuiltinProvider;
+import java.util.HashSet;
+import java.util.Set;
+import org.netbeans.api.project.Project;
+import org.netbeans.spi.project.ProjectConfiguration;
 
-public class SDCCVersionProvider implements VersionProvider
-{
+public class SDCCBuiltinProvider implements BuiltinProvider {
+
+    private static final Set<String> BUILTINS;
+
+    static { 
+        BUILTINS = new HashSet<>();
+//        BUILTINS.add("_nop");
+    }
+
     @Override
-    public String getVersion(String directory)
-    {
-        if (directory == null || directory.isEmpty())
-            return "";
-        
-        String pathToCompiler = directory + File.separator + "sdcc";
-
-        try
-        {
-            Matcher m = LanguageToolSupport.findInOutput(pathToCompiler, new String [] {"--version"}, "\\d+\\.\\d+\\.\\d+", true, false);
-            if (m == null) {
-                return "";
-            }
-            return m.group(0);
-        }
-        catch (IOException ex)
-        {
-        }
-
-        return "";
+    public Set<String> getBuiltins(Project project, ProjectConfiguration projectConf, String itemPath) {
+        return BUILTINS;
     }
 }

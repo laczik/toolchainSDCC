@@ -17,34 +17,10 @@
 */
 package org.laczik.toolchainSDCC;
 
-import com.microchip.mplab.nbide.embedded.api.LanguageToolSupport;
-import com.microchip.mplab.nbide.embedded.spi.VersionProvider;
-import java.io.File;
-import java.io.IOException;
-import java.util.regex.Matcher;
+import com.microchip.mplab.nbide.embedded.makeproject.spi.configurations.UserIncludeModifier;
 
-public class SDCCVersionProvider implements VersionProvider
-{
-    @Override
-    public String getVersion(String directory)
-    {
-        if (directory == null || directory.isEmpty())
-            return "";
-        
-        String pathToCompiler = directory + File.separator + "sdcc";
-
-        try
-        {
-            Matcher m = LanguageToolSupport.findInOutput(pathToCompiler, new String [] {"--version"}, "\\d+\\.\\d+\\.\\d+", true, false);
-            if (m == null) {
-                return "";
-            }
-            return m.group(0);
-        }
-        catch (IOException ex)
-        {
-        }
-
-        return "";
+public class SDCCUserIncludeModifier extends UserIncludeModifier {
+    public SDCCUserIncludeModifier(){
+        super(SDCCUserIncludeProvider.OPT_ID, SDCCUserIncludeProvider.OPT_PROP);
     }
 }
